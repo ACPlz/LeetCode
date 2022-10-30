@@ -19,4 +19,22 @@ public:
 };
 ```
 ### **备注**：自底而上遍历，对比左右数的深度超过1则判定不是返回-1；
+***
+### 二刷，思路差不多
+```class Solution {
+public:
+    int getHight(TreeNode* root) {
+        if (root == NULL) return 0;
+        int leftNode = getHight(root->left);
+        if (leftNode == -1) return -1;
+        int rightNode = getHight(root->right);
+        if (rightNode == -1) return -1;
+        if (abs(leftNode - rightNode) > 1) return -1;
+        else return max(leftNode, rightNode) + 1;
+    }
+    bool isBalanced(TreeNode* root) {
+        return !(getHight(root) == -1);
+    }
+};
+```
         

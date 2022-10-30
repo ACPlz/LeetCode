@@ -43,3 +43,37 @@ public:
 ### **备注**：字符匹配问题，虽然是简单题，但是由于使用了KMP算法所以归类到中等题上
 ### 需要注意的是，构造next数组时采用的方法是将前缀表统一减一，否则会出现next[j] = j一直为一个值的情况，陷入死循环。
 ### 而统一减一的时候需要注意j并不会代表字符匹配的长度了，需要+1.
+***
+### 二刷，一开始用的find函数，然后又用KMP做了一遍
+```class Solution {
+public:
+    void getNext(vector<int> &next, string &s) {
+        int j = 0;
+        for (int i = 1; i < s.length(); i++) {
+            if (s[i] != s[j]) {
+                while (j > 0 && s[i] != s[j]) {
+                    j = next[j - 1];
+                } 
+             }
+             if (s[i] == s[j]) j++;
+            next[i] = j;
+        }
+    }
+    int strStr(string haystack, string needle) {
+        if (needle.size() == 0) return -1;
+        vector<int> next(needle.length(), 0);
+        getNext(next, needle);
+        int cur = 0;
+        for (int i = 0; i < haystack.length(); i++) {
+            if (haystack[i] != needle[cur]) {
+                while (cur > 0 && haystack[i] != needle[cur]) {
+                    cur = next[cur - 1];
+                }
+            }
+            if (haystack[i] == needle[cur]) cur++;
+            if (cur == needle.length()) return i - needle.size() + 1;
+        }
+        return -1;
+    }
+};
+```

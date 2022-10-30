@@ -12,3 +12,15 @@ public:
 };
 ```
 ### **备注**：三次字符串反装即可
+***
+### 二刷，也是三次反转，稍微有一点差别
+```class Solution {
+public:
+    string reverseLeftWords(string s, int n) {
+        reverse(s.begin(), s.begin() + n);
+        reverse(s.begin() + n, s.end());
+        reverse(s.begin(), s.end());
+        return s;
+    }
+};
+```
